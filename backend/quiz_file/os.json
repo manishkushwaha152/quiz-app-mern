@@ -1,0 +1,107 @@
+{
+     "title": "Operating System Basics",
+     "description": "Test your knowledge of fundamental Operating System concepts",
+     "questions": [
+       {
+         "questionText": "What is the main function of an Operating System?",
+         "options": [
+           { "text": "Compiler", "isCorrect": false },
+           { "text": "Text Editor", "isCorrect": false },
+           { "text": "Resource Management", "isCorrect": true },
+           { "text": "Linker", "isCorrect": false }
+         ],
+         "points": 1
+       },
+       {
+         "questionText": "Which of the following is NOT an operating system?",
+         "options": [
+           { "text": "Linux", "isCorrect": false },
+           { "text": "Windows", "isCorrect": false },
+           { "text": "Oracle", "isCorrect": true },
+           { "text": "MacOS", "isCorrect": false }
+         ],
+         "points": 1
+       },
+       {
+         "questionText": "What is a deadlock in OS?",
+         "options": [
+           { "text": "A process that finishes early", "isCorrect": false },
+           { "text": "Set of blocked processes waiting for each other", "isCorrect": true },
+           { "text": "Infinite loop", "isCorrect": false },
+           { "text": "Error in memory", "isCorrect": false }
+         ],
+         "points": 1
+       },
+       {
+         "questionText": "Which one is a preemptive scheduling algorithm?",
+         "options": [
+           { "text": "First Come First Serve (FCFS)", "isCorrect": false },
+           { "text": "Shortest Job First (SJF)", "isCorrect": false },
+           { "text": "Round Robin", "isCorrect": true },
+           { "text": "FIFO", "isCorrect": false }
+         ],
+         "points": 1
+       },
+       {
+         "questionText": "Virtual memory is:",
+         "options": [
+           { "text": "Space on the hard disk", "isCorrect": false },
+           { "text": "Part of the main memory", "isCorrect": false },
+           { "text": "Memory that appears as main storage to programs", "isCorrect": true },
+           { "text": "RAM cache", "isCorrect": false }
+         ],
+         "points": 1
+       },
+       {
+         "questionText": "A process in Operating System is:",
+         "options": [
+           { "text": "An executable file", "isCorrect": false },
+           { "text": "A program in execution", "isCorrect": true },
+           { "text": "A system call", "isCorrect": false },
+           { "text": "A thread", "isCorrect": false }
+         ],
+         "points": 1
+       },
+       {
+         "questionText": "What is a system call?",
+         "options": [
+           { "text": "A function call", "isCorrect": false },
+           { "text": "Request to the OS for service", "isCorrect": true },
+           { "text": "A hardware interrupt", "isCorrect": false },
+           { "text": "A reboot command", "isCorrect": false }
+         ],
+         "points": 1
+       },
+       {
+         "questionText": "Which of the following is a disk scheduling algorithm?",
+         "options": [
+           { "text": "FIFO", "isCorrect": false },
+           { "text": "SCAN", "isCorrect": true },
+           { "text": "LRU", "isCorrect": false },
+           { "text": "LIFO", "isCorrect": false }
+         ],
+         "points": 1
+       },
+       {
+         "questionText": "Which component loads first after booting?",
+         "options": [
+           { "text": "Shell", "isCorrect": false },
+           { "text": "Command Interpreter", "isCorrect": false },
+           { "text": "Kernel", "isCorrect": true },
+           { "text": "Scheduler", "isCorrect": false }
+         ],
+         "points": 1
+       },
+       {
+         "questionText": "Which of the following is a real-time operating system?",
+         "options": [
+           { "text": "Windows XP", "isCorrect": false },
+           { "text": "Ubuntu", "isCorrect": false },
+           { "text": "RTLinux", "isCorrect": true },
+           { "text": "RedHat", "isCorrect": false }
+         ],
+         "points": 1
+       }
+     ]
+   }
+   
