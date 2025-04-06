@@ -1,56 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { 
-  Container, 
-  Typography, 
-  TextField, 
-  Button, 
-  Paper, 
-  Grid, 
-  IconButton, 
-  FormControl, 
-  FormLabel, 
-  RadioGroup, 
-  Radio, 
-  FormControlLabel, 
+import {
+  Container,
+  Typography,
+  TextField,
+  Button,
+  Paper,
+  Grid,
+  IconButton,
+  FormControl,
+  FormLabel,
+  RadioGroup,
+  Radio,
+  FormControlLabel,
   Divider,
   CircularProgress,
   Alert,
   AlertTitle
 } from '@mui/material';
-import { makeStyles } from "@mui/styles";
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    padding: theme.spacing(3),
-  },
-  question: {
-    marginBottom: theme.spacing(3),
-    padding: theme.spacing(2),
-  },
-  option: {
-    marginBottom: theme.spacing(1),
-  },
-  addButton: {
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    marginTop: theme.spacing(3),
-  },
-}));
-
 const QuizEditor = () => {
-  const classes = useStyles();
   const { id } = useParams();
-  const navigate = useNavigate(); // Replaced useHistory
+  const navigate = useNavigate();
+
   const [quiz, setQuiz] = useState({
     title: '',
     description: '',
     questions: [],
   });
+
   const [loading, setLoading] = useState(!id || id === 'new');
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
@@ -85,10 +66,7 @@ const QuizEditor = () => {
       ...newQuestions[index],
       [e.target.name]: e.target.value,
     };
-    setQuiz({
-      ...quiz,
-      questions: newQuestions,
-    });
+    setQuiz({ ...quiz, questions: newQuestions });
   };
 
   const handleOptionChange = (questionIndex, optionIndex, e) => {
@@ -97,10 +75,7 @@ const QuizEditor = () => {
       ...newQuestions[questionIndex].options[optionIndex],
       [e.target.name]: e.target.type === 'checkbox' ? e.target.checked : e.target.value,
     };
-    setQuiz({
-      ...quiz,
-      questions: newQuestions,
-    });
+    setQuiz({ ...quiz, questions: newQuestions });
   };
 
   const addQuestion = () => {
@@ -126,32 +101,20 @@ const QuizEditor = () => {
       text: '',
       isCorrect: false,
     });
-    setQuiz({
-      ...quiz,
-      questions: newQuestions,
-    });
+    setQuiz({ ...quiz, questions: newQuestions });
   };
 
   const removeQuestion = (questionIndex) => {
     const newQuestions = [...quiz.questions];
     newQuestions.splice(questionIndex, 1);
-    setQuiz({
-      ...quiz,
-      questions: newQuestions,
-    });
+    setQuiz({ ...quiz, questions: newQuestions });
   };
 
   const removeOption = (questionIndex, optionIndex) => {
     const newQuestions = [...quiz.questions];
     newQuestions[questionIndex].options.splice(optionIndex, 1);
-    setQuiz({
-      ...quiz,
-      questions: newQuestions,
-    });
+    setQuiz({ ...quiz, questions: newQuestions });
   };
-
-
-  //added part end
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -163,7 +126,7 @@ const QuizEditor = () => {
         await axios.put(`/api/admin/quiz/${id}`, quiz);
         setSuccess('Quiz updated successfully!');
       }
-      setTimeout(() => navigate('/admin'), 2000); // Updated navigation
+      setTimeout(() => navigate('/admin'), 2000);
     } catch (err) {
       setError(err.response?.data?.msg || 'Failed to save quiz');
     }
@@ -173,24 +136,22 @@ const QuizEditor = () => {
     try {
       await axios.delete(`/api/admin/quiz/${id}`);
       setSuccess('Quiz deleted successfully!');
-      setTimeout(() => navigate('/admin'), 2000); // Updated navigation
+      setTimeout(() => navigate('/admin'), 2000);
     } catch (err) {
       setError(err.response?.data?.msg || 'Failed to delete quiz');
     }
   };
 
-  // ... (keep the rest of your component the same)
-  //added
   if (loading) {
     return (
-      <Container className={classes.root}>
+      <Container sx={{ p: 3 }}>
         <CircularProgress />
       </Container>
     );
   }
 
   return (
-    <Container className={classes.root} maxWidth="md">
+    <Container sx={{ p: 3 }} maxWidth="md">
       <Typography variant="h4" gutterBottom>
         {id === 'new' ? 'Create New Quiz' : 'Edit Quiz'}
       </Typography>
@@ -234,12 +195,12 @@ const QuizEditor = () => {
           </Grid>
         </Grid>
 
-        <Typography variant="h5" style={{ margin: '2rem 0 1rem' }}>
+        <Typography variant="h5" sx={{ mt: 4, mb: 2 }}>
           Questions
         </Typography>
 
         {quiz.questions.map((question, qIndex) => (
-          <Paper key={qIndex} className={classes.question} elevation={2}>
+          <Paper key={qIndex} sx={{ mb: 3, p: 2 }} elevation={2}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
@@ -262,70 +223,77 @@ const QuizEditor = () => {
                   inputProps={{ min: 1 }}
                 />
               </Grid>
+
               <Grid item xs={12}>
                 <Typography variant="subtitle1">Options</Typography>
                 {question.options.map((option, oIndex) => (
-                  <div key={oIndex} className={classes.option}>
-                    <Grid container alignItems="center" spacing={2}>
-                      <Grid item xs={8}>
-                        <TextField
-                          fullWidth
-                          label={`Option ${oIndex + 1}`}
-                          name="text"
-                          value={option.text}
-                          onChange={(e) => handleOptionChange(qIndex, oIndex, e)}
-                          required
-                        />
-                      </Grid>
-                      <Grid item xs={3}>
-                        <FormControl component="fieldset">
-                          <FormLabel component="legend">Correct?</FormLabel>
-                          <RadioGroup
-                            row
-                            name="isCorrect"
-                            value={option.isCorrect ? 'yes' : 'no'}
-                            onChange={(e) =>
-                              handleOptionChange(qIndex, oIndex, {
-                                target: {
-                                  name: 'isCorrect',
-                                  value: e.target.value === 'yes',
-                                },
-                              })
-                            }
-                          >
-                            <FormControlLabel
-                              value="yes"
-                              control={<Radio />}
-                              label="Yes"
-                            />
-                            <FormControlLabel
-                              value="no"
-                              control={<Radio />}
-                              label="No"
-                            />
-                          </RadioGroup>
-                        </FormControl>
-                      </Grid>
-                      <Grid item xs={1}>
-                        <IconButton
-                          onClick={() => removeOption(qIndex, oIndex)}
-                          disabled={question.options.length <= 2}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
-                      </Grid>
+                  <Grid
+                    container
+                    key={oIndex}
+                    alignItems="center"
+                    spacing={2}
+                    sx={{ mb: 1 }}
+                  >
+                    <Grid item xs={8}>
+                      <TextField
+                        fullWidth
+                        label={`Option ${oIndex + 1}`}
+                        name="text"
+                        value={option.text}
+                        onChange={(e) => handleOptionChange(qIndex, oIndex, e)}
+                        required
+                      />
                     </Grid>
-                  </div>
+                    <Grid item xs={3}>
+                      <FormControl component="fieldset">
+                        <FormLabel component="legend">Correct?</FormLabel>
+                        <RadioGroup
+                          row
+                          name="isCorrect"
+                          value={option.isCorrect ? 'yes' : 'no'}
+                          onChange={(e) =>
+                            handleOptionChange(qIndex, oIndex, {
+                              target: {
+                                name: 'isCorrect',
+                                value: e.target.value === 'yes',
+                              },
+                            })
+                          }
+                        >
+                          <FormControlLabel
+                            value="yes"
+                            control={<Radio />}
+                            label="Yes"
+                          />
+                          <FormControlLabel
+                            value="no"
+                            control={<Radio />}
+                            label="No"
+                          />
+                        </RadioGroup>
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={1}>
+                      <IconButton
+                        onClick={() => removeOption(qIndex, oIndex)}
+                        disabled={question.options.length <= 2}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </Grid>
+                  </Grid>
                 ))}
+
                 <Button
                   variant="outlined"
                   startIcon={<AddIcon />}
                   onClick={() => addOption(qIndex)}
-                  className={classes.addButton}
+                  sx={{ mt: 1 }}
                 >
                   Add Option
                 </Button>
               </Grid>
+
               <Grid item xs={12}>
                 <Divider />
                 <Button
@@ -333,7 +301,7 @@ const QuizEditor = () => {
                   color="secondary"
                   startIcon={<DeleteIcon />}
                   onClick={() => removeQuestion(qIndex)}
-                  style={{ marginTop: '1rem' }}
+                  sx={{ mt: 2 }}
                 >
                   Remove Question
                 </Button>
@@ -347,19 +315,13 @@ const QuizEditor = () => {
           color="primary"
           startIcon={<AddIcon />}
           onClick={addQuestion}
-          style={{ marginBottom: '2rem' }}
+          sx={{ mb: 3 }}
         >
           Add Question
         </Button>
 
         <div>
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            size="large"
-            className={classes.submit}
-          >
+          <Button type="submit" variant="contained" color="primary" size="large">
             Save Quiz
           </Button>
 
@@ -368,9 +330,8 @@ const QuizEditor = () => {
               variant="contained"
               color="secondary"
               size="large"
-              className={classes.submit}
+              sx={{ ml: 2 }}
               onClick={handleDelete}
-              style={{ marginLeft: '1rem' }}
             >
               Delete Quiz
             </Button>
