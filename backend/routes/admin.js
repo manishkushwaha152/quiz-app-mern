@@ -38,7 +38,6 @@ router.put('/quiz/:id', [auth, isAdmin], adminController.updateQuiz);
 router.delete('/quiz/:id', [auth, isAdmin], adminController.deleteQuiz);
 
 
-
 // @route   GET api/admin/results
 // @desc    Get all quiz results
 // @access  Private (admin)
