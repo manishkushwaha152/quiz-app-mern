@@ -52,27 +52,26 @@ exports.updateQuiz = async (req, res) => {
   }
 };
 
-// Delete a quiz
 exports.deleteQuiz = async (req, res) => {
   try {
+    console.log('DELETE request for quiz:', req.params.id);
+    console.log('Authenticated user:', req.user);
+
     const quiz = await Quiz.findById(req.params.id);
     if (!quiz) {
       return res.status(404).json({ msg: 'Quiz not found' });
     }
 
-    // Check if the user is the creator of the quiz
-    if (quiz.createdBy.toString() !== req.user.id) {
+    if (!req.user || quiz.createdBy.toString() !== req.user.id) {
       return res.status(401).json({ msg: 'Not authorized to delete this quiz' });
     }
 
     await quiz.remove();
-
-    // Also delete all results associated with this quiz
     await Result.deleteMany({ quiz: quiz._id });
 
-    res.json({ msg: 'Quiz deleted' });
+    res.json({ msg: 'Quiz deleted successfully' });
   } catch (err) {
-    console.error(err.message);
+    console.error('Server error while deleting quiz:', err);
     res.status(500).send('Server error');
   }
 };

@@ -134,10 +134,16 @@ const QuizEditor = () => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`/api/admin/quiz/${id}`);
+      const token = localStorage.getItem('token');
+      await axios.delete(`/api/admin/quiz/${id}`, {
+        headers: {
+          'x-auth-token': token,
+        },
+      });
       setSuccess('Quiz deleted successfully!');
       setTimeout(() => navigate('/admin'), 2000);
     } catch (err) {
+      console.error('Delete quiz error:', err.response?.data || err.message);
       setError(err.response?.data?.msg || 'Failed to delete quiz');
     }
   };

@@ -31,10 +31,13 @@ router.post(
 // @access  Private (admin)
 router.put('/quiz/:id', [auth, isAdmin], adminController.updateQuiz);
 
+
 // @route   DELETE api/admin/quiz/:id
 // @desc    Delete a quiz
 // @access  Private (admin)
 router.delete('/quiz/:id', [auth, isAdmin], adminController.deleteQuiz);
+
+
 
 // @route   GET api/admin/results
 // @desc    Get all quiz results
