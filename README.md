@@ -1,8 +1,4 @@
 # Quiz App - MERN Stack
-
-![Quiz App Screenshot](https://via.placeholder.com/800x400?text=Quiz+App+Screenshot)  
-*(Replace with actual screenshot)*
-
 A full-stack quiz application built with the MERN stack (MongoDB, Express.js, React, Node.js) featuring admin dashboards, quiz creation, and real-time analytics.
 
 ## 🚀 Features
@@ -80,8 +76,6 @@ server: {
 }
 ```
 
-## 🌟 Live Demo
-[View Live Demo](Add your deployment link here)
 
 ## 📝 API Endpoints
 
@@ -108,3 +102,7 @@ A MERN stack (MongoDB, Express.js, React, Node.js) quiz application where:
 - ✔ Dynamic Quiz Creation (Add/remove questions & options)
 - ✔ Real-time Results (Score tracking & leaderboard)
 - ✔ Responsive UI (Mobile-friendly with Material-UI)
+
+## 📧 Contact
+
+If you face any problems, feel free to reach out to me at [ankitsharma7805@gmail.com](mailto:ankitsharma7805@gmail.com).
