@@ -72,6 +72,10 @@ const Dashboard = () => {
     ],
   };
 
+  const recentResults = [...results]
+    .sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt))
+    .slice(0, 5);
+
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       <Typography variant="h4" gutterBottom>
@@ -133,15 +137,17 @@ const Dashboard = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {results.slice(0, 5).map((result) => (
+            {recentResults.map((result) => (
               <TableRow key={result._id}>
                 <TableCell>{result.user?.name || 'Unknown User'}</TableCell>
                 <TableCell>{result.quiz?.title || 'Unknown Quiz'}</TableCell>
                 <TableCell>
-                  {result.score} / {result.totalQuestions}
+                  {result.score} / {result.totalQuestions || '?'}
                 </TableCell>
                 <TableCell>
-                  {new Date(result.submittedAt).toLocaleDateString()}
+                  {result.submittedAt
+                    ? new Date(result.submittedAt).toLocaleDateString()
+                    : 'N/A'}
                 </TableCell>
               </TableRow>
             ))}
@@ -161,7 +167,7 @@ const Dashboard = () => {
                 <Typography gutterBottom variant="h5">
                   {quiz.title}
                 </Typography>
-                <Typography>{quiz.questions.length} questions</Typography>
+                <Typography>{quiz.questions?.length || 0} questions</Typography>
               </CardContent>
               <CardActions>
                 <Button
